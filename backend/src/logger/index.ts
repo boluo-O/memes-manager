@@ -1,5 +1,4 @@
 // https://github.com/noobruz/node-express-typescript-oop/blob/main/src/utils/logger.ts
-
 import winston from "winston"
 
 const levels = {
@@ -9,7 +8,6 @@ const levels = {
     http: 3,
     debug: 4,
 }
-
 const level = () => {
     const env = process.env.NODE_ENV || "development"
     const isDevelopment = env === "development"
@@ -23,7 +21,6 @@ const colors = {
     http: "magenta",
     debug: "white",
 }
-
 winston.addColors(colors)
 
 const format = winston.format.combine(
@@ -33,14 +30,12 @@ const format = winston.format.combine(
         (info) => `${info.timestamp} [${info.level}]: ${info.message}`
     )
 )
-
 const custformat = winston.format.combine(
     winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
     winston.format.printf(
         (info) => `${info.timestamp} [${info.level}]: ${info.message}`
     )
 )
-
 const transports = [
     new winston.transports.Console({
         format,
@@ -51,7 +46,6 @@ const transports = [
         level: "error",
         format: custformat,
     }),
-
     new winston.transports.File({
         dirname: "log",
         format: custformat,
@@ -65,10 +59,10 @@ const logger = winston.createLogger({
     transports,
 })
 
-const stream = {
-    write: (message: string) => {
-        logger.info(message.substring(0, message.lastIndexOf("\n")))
-    },
-}
+// const stream = {
+//     write: (message: string) => {
+//         logger.info(message.substring(0, message.lastIndexOf("\n")))
+//     },
+// }
 
-export { logger, stream }
+export default logger
