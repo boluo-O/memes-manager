@@ -1,10 +1,13 @@
-import { createContext } from './context'
-import { router, publicProcedure } from './trpc'
+import memes from './memes'
+import { router, publicProcedure, mergeRouters } from './trpc'
+import { createContext } from './trpc/context'
 import * as trpcExpress from '@trpc/server/adapters/express'
 
 const trpcApiRouter = router({
-    healthcheck: publicProcedure.query(() => 'yay!'),
+    memes,
 })
+
+export type trpcApiRouter = typeof trpcApiRouter
 
 const trpcApiRouterMiddleware = trpcExpress.createExpressMiddleware({
     router: trpcApiRouter,
